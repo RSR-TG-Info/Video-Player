@@ -32,7 +32,4 @@ UPDATES_CHANNEL = getenv("UPDATES_CHANNEL", "JosProjects")
 ASSISTANT_NAME = getenv("ASSISTANT_NAME", "ZauteKm")
 SUDO_USERS = list(map(int, getenv("SUDO_USERS").split()))
 REPLY_MESSAGE = getenv("REPLY_MESSAGE", "")
-if not REPLY_MESSAGE:
-    REPLY_MESSAGE = None
-else:
-    REPLY_MESSAGE = REPLY_MESSAGE
+REPLY_MESSAGE = None if not REPLY_MESSAGE else REPLY_MESSAGE
