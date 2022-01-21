@@ -20,13 +20,13 @@ async def play(client, m: Message):
     msg = await m.reply_text("🔄 `Processing ...`")
     chat_id = m.chat.id
     media = m.reply_to_message
-    if not media and not ' ' in m.text:
+    if not media and ' ' not in m.text:
         await msg.edit("❗ __Send Me An Live Radio Link / YouTube Video Link / Reply To An Audio To Start Audio Streaming!__")
 
     elif ' ' in m.text:
         text = m.text.split(' ', 1)
         query = text[1]
-        if not 'http' in query:
+        if 'http' not in query:
             return await msg.edit("❗ __Send Me An Live Stream Link / YouTube Video Link / Reply To An Video To Start Video Streaming!__")
         regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
         match = re.match(regex, query)
@@ -40,8 +40,6 @@ async def play(client, m: Message):
                 link = ytstreamlink
             except Exception as e:
                 return await msg.edit(f"❌ **YouTube Download Error !** \n\n`{e}`")
-                print(e)
-
         else:
             await msg.edit("🔄 `Starting Live Audio Stream ...`")
             link = query
@@ -133,21 +131,21 @@ async def play(client, m: Message):
             return await group_call.stop()
 
     else:
-        await msg.edit(
-            "💁🏻‍♂️ Do you want to search for a YouTube song?",
-            reply_markup=InlineKeyboardMarkup(
-            [
+            await msg.edit(
+                "💁🏻‍♂️ Do you want to search for a YouTube song?",
+                reply_markup=InlineKeyboardMarkup(
                 [
-                    InlineKeyboardButton(
-                        "✅ Yes", switch_inline_query_current_chat=""
-                    ),
-                    InlineKeyboardButton(
-                        "No ❌", callback_data="close"
-                    )
+                    [
+                        InlineKeyboardButton(
+                            "✅ Yes", switch_inline_query_current_chat=""
+                        ),
+                        InlineKeyboardButton(
+                            "No ❌", callback_data="close"
+                        )
+                    ]
                 ]
-            ]
+            )
         )
-    )
 
 
 @Client.on_message(filters.command(["restart", f"restart@{USERNAME}"]))
